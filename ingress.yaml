@@ -1,0 +1,52 @@
+apiVersion: v1
+items:
+- apiVersion: config.openshift.io/v1
+  kind: Ingress
+  metadata:
+    annotations:
+      kubernetes.io/tls-acme: "true"
+      nginx.ingress.kubernetes.io/proxy-body-size: "0"
+      nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
+    creationTimestamp: 2019-06-07T12:46:40Z
+    generation: 1
+    labels:
+      app: renku
+      chart: renku-0.3.2
+      heritage: Tiller
+      release: renku
+    name: renku
+    namespace: renku
+    resourceVersion: "3021673"
+    selfLink: /apis/extensions/v1beta1/namespaces/renku/ingresses/renku
+    uid: 4bfe0e50-8922-11e9-b68c-0285e0d2cb10
+  spec:
+    rules:
+    - host: renku-ui-renku.apps.cluster-b1db.b1db.openshiftworkshop.com
+      http:
+        paths:
+        - backend:
+            serviceName: renku-keycloak-http
+            servicePort: 80
+          path: /auth
+        - backend:
+            serviceName: proxy-public
+            servicePort: 8000
+          path: /jupyterhub
+        - backend:
+            serviceName: renku-gateway
+            servicePort: 5000
+          path: /api
+        - backend:
+            serviceName: renku-ui
+            servicePort: 80
+          path: /
+    tls:
+    - hosts:
+      - renku-ui-renku.apps.cluster-b1db.b1db.openshiftworkshop.com
+      secretName: openshift-renku-tls
+  status:
+    loadBalancer: {}
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
