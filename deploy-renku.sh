@@ -40,5 +40,3 @@ sed "s;#@renku@#;$HOST;g" nginx-route-template.yaml > nginx-route.yaml
 oc apply -f ./nginx-route.yaml
 rm nginx-route.yaml || true
 oc patch route renku -p '{"metadata":{"annotations":{"kubernetes.io/tls-acme":"true"}}}'
-
-# readiness probe for gw to true
