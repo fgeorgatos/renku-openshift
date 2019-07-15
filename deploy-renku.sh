@@ -5,6 +5,7 @@ HELM_VERSION=${HELM_VERSION:-"v2.11.0"}
 export TILLER_NAMESPACE=${TILLER_NAMESPACE:-"tiller"}
 ACME_NAMESPACE=${ACME_NAMESPACE:-"acme"}
 RENKU_NAMESPACE=${RENKU_NAMESPACE:-"renku"}
+RENKU_VERSION=${RENKU_VERSION:-"0.4.0"}
 HOST=${HOST:-"renku.apps.cluster-$OC_CLUSTER_ID.$OC_CLUSTER_ID.openshiftworkshop.com"}
 
 
@@ -30,7 +31,7 @@ oc adm policy add-scc-to-user privileged -z default # init-containers added by s
 
 # process the value file
 sed "s;#@renku@#;$HOST;g" values-template.yaml > values.yaml
-helm upgrade --install renku --namespace ${RENKU_NAMESPACE} -f values.yaml renku-0.3.2.tgz
+helm upgrade --install renku --namespace ${RENKU_NAMESPACE} -f values.yaml renku-${RENKU_VERSION}.tgz
 rm values.yaml || true
 
 # nginx

@@ -12,3 +12,5 @@ oc delete project ${ACME_NAMESPACE}
 
 # renku
 oc delete project ${RENKU_NAMESPACE}
+
+echo "give Kubernetes couple of seconds to settle out"
