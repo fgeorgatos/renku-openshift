@@ -35,7 +35,7 @@ helm upgrade --install renku --namespace ${RENKU_NAMESPACE} -f values.yaml renku
 rm values.yaml || true
 
 # nginx
-oc new-app nginx:1.12~https://github.com/jkremser/renku-openshift.git --context-dir=nginx --name=nginx
+oc new-app -lapp=nginx nginx:1.12~https://github.com/jkremser/renku-openshift.git --context-dir=nginx --name=nginx
 sleep 60 # meh
 sed "s;#@renku@#;$HOST;g" nginx-route-template.yaml > nginx-route.yaml
 oc apply -f ./nginx-route.yaml
