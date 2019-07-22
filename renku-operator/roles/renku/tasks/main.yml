@@ -1,0 +1,30 @@
+---
+# tasks file for renku
+# - name: Deploy Renku step 1
+#   k8s:
+#     state: present
+#     definition: "{{ lookup('template', item)}}"
+#   with_items:
+#     - tiller.yaml.j2
+#     - acme.yaml.j2
+#     - renku.yaml.j2
+
+- name: Deploy Renku
+  k8s:
+    state: present
+    definition: "{{ lookup('template', item + '.yaml.j2')}}"
+  with_items:
+    - tiller
+    - acme
+    #- renku
+  when: renku_spec[item]
+
+- name: trigger helm 
+  shell: helm template renku --namespace ${RENKU_NAMESPACE} -f values.yaml renku-${RENKU_VERSION}.tgz | kubectl -f -
+
+
+
+
+# sed "s;#@renku@#;$HOST;g" values-template.yaml > values.yaml
+# helm upgrade --install renku --namespace ${RENKU_NAMESPACE} -f values.yaml renku-${RENKU_VERSION}.tgz
+# rm values.yaml || true

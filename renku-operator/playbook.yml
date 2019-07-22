@@ -1,0 +1,8 @@
+- hosts: localhost
+  gather_facts: no
+  tasks:
+  - set_fact:
+    renku_spec: "{{ _renku_io_renku.spec }}"
+
+  - import_role:
+      name: "renku"

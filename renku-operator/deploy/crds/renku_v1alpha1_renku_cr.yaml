@@ -1,0 +1,10 @@
+apiVersion: renku.io/v1alpha1
+kind: Renku
+metadata:
+  name: example-renku
+spec:
+  # Add fields here
+  clusterId: "renku-439f"
+  host: "renku.apps.cluster-renku-439f.renku-439f.openshiftworkshop.com"
+  tiller: true
+  certs: true
