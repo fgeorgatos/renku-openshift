@@ -1,19 +1,34 @@
 ---
-
-- name: Deploy Renku prerequisities
+- name: Deploy Renku prerequisities (tiller)
   k8s:
     state: present
-    definition: "{{ lookup('template', item + '.yaml.j2')}}"
-  with_items:
-    - tiller
-    - acme
-  when: renku_spec[item]
+    definition: "{{ lookup('template', 'tiller.yaml.j2') }}"
+  when: tiller
+
+- name: Deploy Renku prerequisities (acme)
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'acme.yaml.j2') }}"
+  when: acme
+
+- name: create namespace for renku
+  k8s:
+    state: present
+    definition:
+      kind: Namespace
+      apiVersion: v1
+      metadata:
+        name: "{{ renku_namespace | renku }}"
 
 - name: change host in the value files for helm
-  shell: sed "s;#@renku@#;$HOST;g" values-template.yaml > values.yaml
+  template:
+    src: values-template.j2
+    dest: values.yaml
 
+
+# consider using helm ansible module
 - name: render the helm charts
-  shell: helm template renku --namespace ${RENKU_NAMESPACE} -f values.yaml renku-${RENKU_VERSION}.tgz > renku.yaml
+  shell: helm template renku --namespace {{ renku_namespace | renku }} -f values.yaml renku-${RENKU_VERSION}.tgz > renku.yaml
 
 
 - name: Deploy Renku
