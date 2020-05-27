@@ -22,7 +22,7 @@ global:
     clientSecret: a-much-more-secret-value
     gitlabClientSecret: c774e7ffa2c3a3e4ee5637a977cfa5af90d62d5050a83cff86a4b5ad558fb4e5
   renku:
-    domain: &renku-domain renku-ui-renku.apps.cluster-b1db.b1db.openshiftworkshop.com
+    domain: &renku-domain #@renku@#
   graph:
     jena:
       dataset: renku
@@ -83,10 +83,10 @@ postgresql:
 ui:
   ingress:
     enabled: false
-  baseUrl: 	http://renku-ui-renku.apps.cluster-b1db.b1db.openshiftworkshop.com
+  baseUrl: 	http://#@renku@#
   gitlabUrl: *renku-gitlab-url
-  gatewayUrl: https://renku-ui-renku.apps.cluster-b1db.b1db.openshiftworkshop.com/api
-  jupyterhubUrl: http://renku-ui-renku.apps.cluster-b1db.b1db.openshiftworkshop.com/jupyterhub
+  gatewayUrl: https://#@renku@#/api
+  jupyterhubUrl: http://#@renku@#/jupyterhub
   welcomePage:
     text: |
         ## Welcome to Renku's Renku!
@@ -154,7 +154,7 @@ notebooks:
           admin: true
           oauth_client_id: &gatewayClient gateway
           apiToken: &gatewaySecret randomvalue
-          oauth_redirect_uri: https://renku-ui-renku.apps.cluster-b1db.b1db.openshiftworkshop.com/api/auth/jupyterhub/token
+          oauth_redirect_uri: https://#@renku@#/api/auth/jupyterhub/token
       resources:
         requests:
           cpu: 200m
@@ -167,7 +167,7 @@ notebooks:
       gitlab:
         clientId: *gitlab-client-id
         clientSecret: *gitlab-client-secret
-        callbackUrl: https://renku-ui-renku.apps.cluster-b1db.b1db.openshiftworkshop.com/jupyterhub/hub/oauth_callback # Forces the default callback url
+        callbackUrl: https://#@renku@#/jupyterhub/hub/oauth_callback # Forces the default callback url
 
     proxy:
       secretToken: randomvalue

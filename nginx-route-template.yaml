@@ -1,0 +1,9 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: renku
+spec:
+  host: #@renku@#
+  to:
+    kind: Service
+    name: nginx

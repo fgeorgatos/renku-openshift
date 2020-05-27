@@ -1,0 +1,5 @@
+---
+- version: v1alpha1
+  group: renku.io
+  kind: Renku
+  playbook: /opt/ansible/playbook.yml
